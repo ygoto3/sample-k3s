@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-svc
+  namespace: prd
+  labels:
+    service: mysql
+spec:
+  clusterIP: None
+  ports:
+    - name: mysql
+      port: 3306
+      protocol: TCP
+  selector:
+    app: mysql
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-read-svc
+  namespace: prd
+  labels:
+    service: mysql
+spec:
+  type: ClusterIP
+  ports:
+    - name: mysql
+      port: 3306
+      protocol: TCP
+  selector:
+    app: mysql

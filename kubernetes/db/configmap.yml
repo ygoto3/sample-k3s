@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-server-initdb-config
+  namespace: prd
+data:
+  createdb.sql: |
+    CREATE TABLE db.sample (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255) NOT NULL);

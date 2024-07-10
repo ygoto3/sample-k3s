@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ldap-deploy
+  namespace: prd
+  labels:
+    app: ldap
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ldap
+  template:
+    metadata:
+      labels:
+        app: ldap
+    spec:
+      enableServiceLinks: false
+      containers:
+        - name: ldap
+          image: lldap/lldap:stable
+          env:
+            - name: LLDAP_VERBOSE
+              value: "true"
+            - name: LLDAP_JWT_SECRET
+              # value: "$(openssl rand 256 | base64)"
+              value: "${JWT_SECRET}"
+            - name: LLDAP_KEY_SEED
+              # value: "$(openssl rand 256 | base64)"
+              value: "${KEY_SEED}"
+            - name: LLDAP_LDAP_BASE_DN
+              # value: "dc=ldap,dc=example,dc=com"
+              value: "${LDAP_BASE_DN}"
+          ports:
+            - containerPort: 3890
+              name: ldap
+            - containerPort: 6390
+              name: ldaps
+            - containerPort: 17170
+              name: http

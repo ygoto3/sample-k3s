@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deploy
+  namespace: prd
+  labels:
+    app: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: api
+          image: ${DOCKER_IMAGE}
+          env:
+            - name: BOUND_IP_ADDRESS
+              value: "0.0.0.0"
+            - name: PORT
+              value: "80"
+            - name: DATABASE_USER
+              value: root
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: rootPassword
+            - name: DATABASE_URL
+              value: mysql-statefulset-0.mysql-svc:3306/db
+            - name: DATABASE_READ_URL
+              value: mysql-read-svc:3306/db
+          ports:
+            - name: api
+              containerPort: 80

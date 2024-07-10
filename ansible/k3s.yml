@@ -1,0 +1,76 @@
+---
+
+- hosts: k3s-ubuntu
+  user: root
+  tasks:
+
+    - name: Install apt packages
+      tags: packages
+      ansible.builtin.apt:
+        update_cache: yes
+        name:
+          - curl
+
+    - name: Install K3s
+      tags: k3s
+      block:
+
+        - name: Fetch k3s install script
+          ansible.builtin.uri:
+            url: https://get.k3s.io
+            return_content: yes
+          register: k3s_installer
+
+        - name: Run k3s install script
+          ansible.builtin.shell:
+            cmd: sh -
+            stdin: "{{ k3s_installer.content }}"
+
+        - name: Fetch key fort the app user
+          ansible.builtin.fetch:
+            src: /etc/rancher/k3s/k3s.yaml
+            dest: ./sysroot/etc/rancher/k3s/k3s.yaml
+            flat: true
+
+    - name: Add the app group/user
+      tags: firewall
+      block:
+
+      - name: Install ufw
+        ansible.builtin.apt:
+          name: ufw
+          state: present
+      
+      - name: Start ufw
+        ansible.builtin.systemd:
+          name: ufw
+          enabled: yes
+          state: started
+
+      - name: Allow ssh
+        community.general.ufw:
+          rule: limit
+          port: ssh
+          proto: tcp
+      
+      - name: Allow http
+        community.general.ufw:
+          rule: allow
+          port: '80'
+          proto: tcp
+
+      - name: Allow https
+        community.general.ufw:
+          rule: allow
+          port: '443'
+          proto: tcp
+
+      - name: Allow K3s
+        community.general.ufw:
+          rule: allow
+          port: '6443'
+          proto: tcp
+ 
+      - name: Enable ufw
+        community.general.ufw:
+          state: enabled
