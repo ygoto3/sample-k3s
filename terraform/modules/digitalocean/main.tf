@@ -1,8 +1,8 @@
 resource "digitalocean_droplet" "droplet" {
   image    = "ubuntu-24-04-x64"
   name     = "${var.droplet_name}"
-  region   = "sgp1"
-  size     = "s-1vcpu-2gb"
+  region   = "${var.droplet_region}"
+  size     = "${var.droplet_size}"
   ssh_keys = ["${var.ssh_key_id}"]
 }
 

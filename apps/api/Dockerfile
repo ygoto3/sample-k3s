@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM rust:1.79-bullseye as builder
+FROM --platform=$BUILDPLATFORM rust:1.83-bullseye as builder
 
 # -----------------------------
 # Prepare the environment for building the application

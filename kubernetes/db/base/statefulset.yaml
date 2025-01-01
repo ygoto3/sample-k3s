@@ -2,49 +2,49 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: mysql-statefulset
-  namespace: prd
+  name: postgresql-statefulset
+  namespace: data
   labels:
-    app: mysql
+    app: postgresql
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mysql
-  serviceName: mysql-svc
+      app: postgresql
+  serviceName: postgresql-svc
   template:
     metadata:
       labels:
-        app: mysql
+        app: postgresql
     spec:
       containers:
-        - name: mysql
-          image: mysql:9.0.0
+        - name: postgresql
+          image: postgres:17
           env:
-            - name: MYSQL_ROOT_PASSWORD
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mysql-secret
+                  name: postgresql-secret
                   key: rootPassword
-            - name: MYSQL_DATABASE
+            - name: POSTGRESQL_DATABASE
               value: db
             - name: LANG
               value: C.UTF-8
           ports:
-            - name: mysql
+            - name: postgresql
               containerPort: 3306
           volumeMounts:
-            - name: mysql-pvc
-              mountPath: /var/lib/mysql
-            - name: mysql-server-initdb
+            - name: postgresql-pvc
+              mountPath: /var/lib/postgresql
+            - name: postgresql-server-initdb
               mountPath: /docker-entrypoint-initdb.d
       volumes:
-        - name: mysql-server-initdb
+        - name: postgresql-server-initdb
           configMap:
-            name: mysql-server-initdb-config
+            name: postgresql-server-initdb-config
   volumeClaimTemplates:
     - metadata:
-        name: mysql-pvc
+        name: postgresql-pvc
       spec:
         accessModes: [ "ReadWriteOnce" ]
         resources:

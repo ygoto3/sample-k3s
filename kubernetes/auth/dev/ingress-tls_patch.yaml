@@ -1,0 +1,15 @@
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: authelia-ingress
+  namespace: platform
+  annotations:
+    # cert-manager.io/cluster-issuer: letsencrypt-issuer-staging
+    cert-manager.io/cluster-issuer: letsencrypt-issuer
+spec:
+  tls:
+    - hosts:
+        - ${DOMAIN}
+      # secretName: cert-staging
+      secretName: cert

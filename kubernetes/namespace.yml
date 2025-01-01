@@ -2,4 +2,14 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: prd
+  name: platform
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: data
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: api

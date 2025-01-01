@@ -1,0 +1,17 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-ingress
+  namespace: api
+  annotations:
+    spec.ingressClassName: traefik
+    # cert-manager.io/cluster-issuer: letsencrypt-issuer-staging
+    cert-manager.io/cluster-issuer: letsencrypt-issuer
+    traefik.ingress.kubernetes.io/router.middlewares: platform-authelia-auth-middleware@kubernetescrd,default-redirect-https@kubernetescrd
+spec:
+  tls:
+    - hosts:
+        - ${DOMAIN}
+      # secretName: cert-staging
+      secretName: cert

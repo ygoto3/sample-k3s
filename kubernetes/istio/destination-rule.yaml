@@ -1,0 +1,12 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: api-destination-rule
+  namespace: api
+spec:
+  host: api-svc.api.svc.cluster.local
+  trafficPolicy:
+    connectionPool:
+      http:
+        http2MaxRequests: 100

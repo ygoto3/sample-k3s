@@ -12,4 +12,5 @@ module "k3s" {
   ssh_key_id = "${data.digitalocean_ssh_key.ssh.id}"
   project_name = "${var.project_name}"
   droplet_name = "${var.droplet_name}"
+  droplet_size = "${var.droplet_size}"
 }

@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: authelia-svc
-  namespace: prd
+  namespace: platform
   labels:
     name: authelia
 spec:

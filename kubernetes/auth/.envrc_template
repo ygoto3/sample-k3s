@@ -1,0 +1,6 @@
+export JWT_SECRET=
+export EMAIL=
+export LDAP_ADMIN_PASSWORD=
+export DOMAIN=
+export SESSION_SECRET=
+export USER_PASSWORD=

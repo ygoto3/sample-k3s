@@ -1,0 +1,3 @@
+export JWT_SECRET=
+export KEY_SEED=
+export LDAP_BASE_DN=

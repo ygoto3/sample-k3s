@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: api-deploy
-  namespace: prd
+  namespace: api
   labels:
     app: api
 spec:
@@ -25,16 +25,16 @@ spec:
             - name: PORT
               value: "80"
             - name: DATABASE_USER
-              value: root
+              value: postgres
             - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mysql-secret
+                  name: postgresql-secret
                   key: rootPassword
             - name: DATABASE_URL
-              value: mysql-statefulset-0.mysql-svc:3306/db
+              value: postgresql-statefulset-0.postgresql-svc.data:5432/db
             - name: DATABASE_READ_URL
-              value: mysql-read-svc:3306/db
+              value: postgresql-read-svc.data:5432/db
           ports:
             - name: api
               containerPort: 80

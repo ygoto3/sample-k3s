@@ -3,10 +3,10 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: authelia-auth-middleware
-  namespace: prd
+  namespace: platform
 spec:
   forwardAuth:
-    address: http://authelia-svc.prd.svc:9091/api/verify?rd=https://${DOMAIN}/ssoauth/
+    address: http://authelia-svc.platform.svc:9091/api/verify?rd=https://${DOMAIN}/ssoauth/
     trustForwardHeader: true
     authResponseHeaders:
       - Remote-User

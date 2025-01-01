@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgresql-server-initdb-config
+  namespace: data
+data:
+  createdb.sql: |
+    CREATE DATABASE db;
+    \c db;
+    CREATE TABLE sample (id SERIAL PRIMARY KEY, name VARCHAR(255) NOT NULL);

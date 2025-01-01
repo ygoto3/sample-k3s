@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: authelia-config
-  namespace: prd
+  namespace: platform
 stringData:
   configuration.yml: |
     jwt_secret: ${JWT_SECRET}
@@ -14,27 +14,8 @@ stringData:
     log:
       level: debug
     authentication_backend:
-      # Uncomment the following block to enable file authentication
       file:
         path: /config/users_database.yml
-      # Uncomment the following block to enable LDAP authentication
-      # ldap:
-      #   implementation: custom
-      #   url: 'ldap://ldap-svc:3890'
-      #   timeout: 5s
-      #   start_tls: false
-      #   # base_dn: "dc=ldap,dc=example,dc=com"
-      #   base_dn: "${LDAP_BASE_DN}"
-      #   users_filter: "(&({username_attribute}={input})(objectClass=person))"
-      #   additional_users_dn: "ou=people"
-      #   additional_groups_dn: "ou=groups"
-      #   username_attribute: "uid"
-      #   display_name_attribute: 'displayName'
-      #   mail_attribute: 'mail'
-      #   group_name_attribute: 'cn'
-      #   groups_filter: "(member={dn})"
-      #   user: "uid=admin,ou=people,${LDAP_BASE_DN}"
-      #   password: '${LDAP_ADMIN_PASSWORD}'
     access_control:
       default_policy: deny
       rules:

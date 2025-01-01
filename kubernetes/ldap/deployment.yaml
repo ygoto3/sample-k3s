@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ldap-deploy
-  namespace: prd
+  namespace: platform
   labels:
     app: ldap
 spec:

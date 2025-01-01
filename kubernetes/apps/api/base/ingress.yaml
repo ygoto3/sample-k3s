@@ -3,9 +3,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: api-ingress
-  namespace: prd
-  annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
+  namespace: api
 spec:
   rules:
     - host: ${DOMAIN}
